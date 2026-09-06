@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPARFIND — Trends &amp; Deals, ehrlich geprüft</title>
+<meta name="description" content="Handverlesene Angebote aus dem Netz: Haushalt, Küche, Beauty, Technik. Mit echten Verkaufszahlen statt erfundener Rabatte.">
+<meta name="theme-color" content="#0b0d12">
+
+<!-- Social-Vorschau: Pinterest und TikTok ziehen sich diese Felder -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SPARFIND">
+<meta property="og:title" content="SPARFIND — Trends & Deals, ehrlich geprüft">
+<meta property="og:description" content="Handverlesene Angebote mit echten Verkaufszahlen. Kein erfundener Countdown, keine Fantasie-Rabatte.">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════ GRUNDLAGEN ══════════════ */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0b0d12;
+  --bg-soft:#12151d;
+  --card:#161a24;
+  --card-hi:#1c212d;
+  --line:#252b38;
+  --txt:#eef1f7;
+  --txt-dim:#98a1b3;
+  --txt-faint:#69728a;
+  --accent:#ff5d3b;
+  --accent-2:#ffb03b;
+  --mint:#31d0aa;
+  --violet:#8b7bff;
+  --radius:14px;
+  --radius-lg:22px;
+  --font:'Outfit',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --shadow:0 10px 40px rgba(0,0,0,.45);
+  --maxw:1240px;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font);background:var(--bg);color:var(--txt);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+button{font-family:var(--font);cursor:pointer;border:none;background:none;color:inherit}
+img{max-width:100%;display:block}
+::selection{background:var(--accent);color:#fff}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* Fokus sichtbar lassen — Tastaturbedienung darf nicht verschwinden */
+:focus-visible{outline:2px solid var(--accent-2);outline-offset:3px;border-radius:4px}
+
+/* ══════════════ HINTERGRUND-LEUCHTEN ══════════════
+   Zwei weiche Farbflächen, die sich langsam bewegen. Reine CSS-Transformation,
+   damit sie auf dem Handy nicht ruckelt. */
+.glow{position:fixed;border-radius:50%;filter:blur(90px);opacity:.4;pointer-events:none;z-index:0}
+.glow-a{width:520px;height:520px;background:radial-gradient(circle,#ff5d3b,transparent 70%);top:-180px;left:-120px;animation:drift-a 22s ease-in-out infinite}
+.glow-b{width:460px;height:460px;background:radial-gradient(circle,#8b7bff,transparent 70%);top:280px;right:-160px;animation:drift-b 26s ease-in-out infinite}
+@keyframes drift-a{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(80px,60px) scale(1.15)}}
+@keyframes drift-b{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-70px,90px) scale(1.1)}}
+
+/* ══════════════ KOPFZEILE ══════════════ */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(11,13,18,.82);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.head{display:flex;align-items:center;gap:18px;height:68px}
+.logo{display:flex;align-items:center;gap:9px;font-weight:900;font-size:22px;letter-spacing:-.6px;flex-shrink:0}
+.logo-mark{
+  width:34px;height:34px;border-radius:10px;flex-shrink:0;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  box-shadow:0 4px 14px rgba(255,93,59,.4);
+}
+.logo span{color:var(--accent)}
+
+.search{
+  flex:1;max-width:460px;display:flex;align-items:center;gap:9px;
+  background:var(--card);border:1px solid var(--line);border-radius:11px;
+  padding:0 14px;height:42px;transition:border-color .2s,box-shadow .2s;
+}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,93,59,.14)}
+.search input{
+  flex:1;background:none;border:none;outline:none;color:var(--txt);
+  font-size:14.5px;font-family:var(--font);
+}
+.search input::placeholder{color:var(--txt-faint)}
+.search svg{width:17px;height:17px;stroke:var(--txt-faint);fill:none;stroke-width:2;flex-shrink:0}
+
+.head-links{margin-left:auto;display:flex;gap:6px;align-items:center}
+.hlink{padding:8px 14px;border-radius:9px;font-size:14px;font-weight:500;color:var(--txt-dim);transition:.18s}
+.hlink:hover{background:var(--card);color:var(--txt)}
+
+/* ══════════════ HERO ══════════════ */
+.hero{position:relative;z-index:1;padding:76px 0 56px;text-align:center}
+.badge-live{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(49,208,170,.1);border:1px solid rgba(49,208,170,.3);
+  color:var(--mint);padding:7px 15px;border-radius:99px;
+  font-size:12.5px;font-weight:600;letter-spacing:.4px;margin-bottom:22px;
+}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--mint);animation:pulse 2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+
+.hero h1{
+  font-size:clamp(38px,7vw,68px);font-weight:900;line-height:1.04;
+  letter-spacing:-2.2px;margin-bottom:20px;
+}
+.hero h1 em{
+  font-style:normal;
+  background:linear-gradient(120deg,var(--accent),var(--accent-2) 55%,var(--mint));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  background-size:200% auto;animation:shimmer 6s linear infinite;
+}
+@keyframes shimmer{to{background-position:200% center}}
+.hero p{font-size:clamp(15px,2.2vw,18.5px);color:var(--txt-dim);max-width:600px;margin:0 auto 30px}
+
+.hero-stats{display:flex;justify-content:center;gap:44px;flex-wrap:wrap;margin-top:8px}
+.hstat .n{font-size:27px;font-weight:800;letter-spacing:-.8px}
+.hstat .l{font-size:12.5px;color:var(--txt-faint);margin-top:1px}
+
+/* ══════════════ KATEGORIEN ══════════════ */
+.cats{position:relative;z-index:1;padding:10px 0 34px}
+.cat-row{display:flex;gap:9px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+.cat-row::-webkit-scrollbar{display:none}
+.cat{
+  display:inline-flex;align-items:center;gap:7px;white-space:nowrap;flex-shrink:0;
+  background:var(--card);border:1px solid var(--line);
+  padding:9px 17px;border-radius:99px;font-size:14px;font-weight:500;
+  color:var(--txt-dim);transition:.2s;
+}
+.cat:hover{border-color:var(--txt-faint);color:var(--txt);transform:translateY(-1px)}
+.cat[aria-selected="true"]{
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  border-color:transparent;color:#fff;font-weight:600;
+  box-shadow:0 5px 18px rgba(255,93,59,.32);
+}
+
+/* ══════════════ DEAL-RASTER ══════════════ */
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:22px;position:relative;z-index:1}
+.section-head h2{font-size:25px;font-weight:800;letter-spacing:-.8px}
+.count{font-size:13.5px;color:var(--txt-faint)}
+
+.grid{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(252px,1fr));gap:18px;
+  padding-bottom:60px;
+}
+
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);
+  overflow:hidden;display:flex;flex-direction:column;position:relative;
+  transition:transform .26s cubic-bezier(.2,.8,.3,1),border-color .26s,box-shadow .26s;
+  /* Start-Zustand der Einblend-Animation */
+  opacity:0;transform:translateY(22px);
+}
+.card.in{opacity:1;transform:none}
+.card:hover{transform:translateY(-5px);border-color:#3a4256;box-shadow:var(--shadow)}
+
+.card-img{
+  aspect-ratio:1/1;background:var(--bg-soft);position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.2,.8,.3,1)}
+.card:hover .card-img img{transform:scale(1.07)}
+/* Platzhalter, solange kein echtes Produktfoto vorliegt */
+.card-img.empty::after{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(circle at 30% 30%,rgba(255,93,59,.16),transparent 60%),
+    radial-gradient(circle at 70% 70%,rgba(139,123,255,.16),transparent 60%),
+    repeating-linear-gradient(45deg,transparent 0 12px,rgba(255,255,255,.02) 12px 24px);
+}
+.card-img .ph{position:relative;z-index:1;font-size:36px;opacity:.5}
+
+.tag-shop{
+  position:absolute;top:11px;left:11px;z-index:2;
+  padding:4px 10px;border-radius:7px;font-size:11px;font-weight:700;
+  letter-spacing:.3px;color:#fff;backdrop-filter:blur(6px);
+}
+.tag-off{
+  position:absolute;top:11px;right:11px;z-index:2;
+  background:var(--accent);color:#fff;padding:4px 10px;border-radius:7px;
+  font-size:12px;font-weight:800;
+}
+.tag-ad{
+  position:absolute;bottom:11px;right:11px;z-index:2;
+  background:rgba(0,0,0,.62);backdrop-filter:blur(6px);
+  color:#cfd5e2;padding:3px 8px;border-radius:6px;
+  font-size:10px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;
+}
+
+.card-body{padding:15px 16px 17px;display:flex;flex-direction:column;flex:1;gap:9px}
+.card-title{font-size:14.8px;font-weight:600;line-height:1.38;letter-spacing:-.2px}
+.card-note{font-size:12.8px;color:var(--txt-faint);line-height:1.5}
+
+.proof{display:flex;align-items:center;gap:10px;font-size:12.3px;color:var(--txt-dim);flex-wrap:wrap}
+.proof b{color:var(--mint);font-weight:700}
+.stars{color:var(--accent-2);letter-spacing:.5px}
+
+.price-row{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-top:auto;padding-top:5px}
+.p-now{font-size:21px;font-weight:800;letter-spacing:-.7px}
+.p-old{font-size:13.5px;color:var(--txt-faint);text-decoration:line-through}
+.p-ask{font-size:14.5px;font-weight:600;color:var(--txt-dim)}
+.p-stale{font-size:11.5px;color:var(--accent-2);width:100%;margin-top:-3px}
+
+.cta{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  background:var(--card-hi);border:1px solid var(--line);
+  padding:11px;border-radius:11px;font-size:13.8px;font-weight:700;
+  transition:.2s;margin-top:4px;
+}
+.card:hover .cta{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-color:transparent;color:#fff}
+.cta .arr{transition:transform .2s}
+.card:hover .cta .arr{transform:translateX(3px)}
+
+/* ══════════════ LEERZUSTAND ══════════════ */
+.empty-state{
+  grid-column:1/-1;text-align:center;padding:70px 24px;
+  border:1px dashed var(--line);border-radius:var(--radius-lg);color:var(--txt-dim);
+}
+.empty-state .ico{font-size:42px;margin-bottom:14px;opacity:.6}
+.empty-state h3{font-size:19px;font-weight:700;color:var(--txt);margin-bottom:7px}
+.empty-state button{
+  margin-top:16px;background:var(--accent);color:#fff;
+  padding:10px 22px;border-radius:10px;font-weight:700;font-size:14px;
+}
+
+/* ══════════════ TRANSPARENZ-STREIFEN ══════════════ */
+.honest{
+  position:relative;z-index:1;margin:0 0 60px;
+  background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-lg);
+  padding:34px 30px;
+}
+.honest h2{font-size:21px;font-weight:800;margin-bottom:8px;letter-spacing:-.5px}
+.honest > p{color:var(--txt-dim);font-size:14.5px;max-width:660px;margin-bottom:22px}
+.honest-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:18px}
+.hitem{display:flex;gap:12px;align-items:flex-start}
+.hitem .i{
+  width:34px;height:34px;flex-shrink:0;border-radius:10px;
+  background:var(--card);border:1px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+}
+.hitem strong{display:block;font-size:14px;margin-bottom:2px}
+.hitem span{font-size:12.8px;color:var(--txt-faint);line-height:1.5}
+
+/* ══════════════ FUSSZEILE ══════════════ */
+footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relative;z-index:1}
+.foot{display:flex;justify-content:space-between;gap:34px;flex-wrap:wrap;padding:44px 0 22px}
+.foot-brand{max-width:330px}
+.foot-brand p{font-size:13.3px;color:var(--txt-faint);margin-top:11px;line-height:1.65}
+.foot-col h4{font-size:12px;text-transform:uppercase;letter-spacing:1.2px;color:var(--txt-faint);margin-bottom:13px}
+.foot-col a{display:block;font-size:13.8px;color:var(--txt-dim);padding:5px 0;transition:color .18s}
+.foot-col a:hover{color:var(--accent)}
+.foot-legal{
+  border-top:1px solid var(--line);padding:18px 0 30px;
+  font-size:12.3px;color:var(--txt-faint);line-height:1.7;
+}
+
+/* ══════════════ MOBIL ══════════════ */
+@media(max-width:760px){
+  .head{height:60px;gap:12px}
+  .search{max-width:none}
+  .head-links{display:none}
+  .hero{padding:52px 0 40px}
+  .hero-stats{gap:30px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:13px}
+  .card-body{padding:12px 13px 14px;gap:7px}
+  .card-title{font-size:13.6px}
+  .card-note{display:none}
+  .p-now{font-size:18px}
+  .glow{opacity:.28}
+  .honest{padding:26px 20px}
+}
+
+/* Wer Bewegung reduziert haben will, bekommt sie nicht aufgezwungen. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .card{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="glow glow-a" aria-hidden="true"></div>
+<div class="glow glow-b" aria-hidden="true"></div>
+
+<header>
+  <div class="wrap head">
+    <a href="/" class="logo">
+      <span class="logo-mark" aria-hidden="true">✦</span>
+      SPAR<span>FIND</span>
+    </a>
+    <div class="search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input type="text" id="q" autocomplete="off" placeholder="Produkt suchen … z.B. Staubsauger, Airfryer" aria-label="Angebote durchsuchen">
+    </div>
+    <nav class="head-links">
+      <a class="hlink" href="#deals">Deals</a>
+      <a class="hlink" href="#transparenz">Wie wir arbeiten</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <div class="badge-live"><span class="pulse" aria-hidden="true"></span>Täglich neu geprüft</div>
+    <h1>Trends finden.<br><em>Clever sparen.</em></h1>
+    <p>Handverlesene Angebote aus dem Netz — mit echten Verkaufszahlen statt erfundener Rabatte und ohne künstlichen Countdown.</p>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n" id="stat-deals">0</div><div class="l">geprüfte Deals</div></div>
+      <div class="hstat"><div class="n" id="stat-cats">0</div><div class="l">Kategorien</div></div>
+      <div class="hstat"><div class="n" id="stat-shops">0</div><div class="l">Händler</div></div>
+    </div>
+  </section>
+
+  <section class="cats wrap">
+    <div class="cat-row" id="cats" role="tablist" aria-label="Kategorien"></div>
+  </section>
+
+  <section class="wrap" id="deals">
+    <div class="section-head">
+      <h2 id="grid-title">Aktuelle Deals</h2>
+      <span class="count" id="grid-count"></span>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="wrap" id="transparenz">
+    <div class="honest">
+      <h2>Wie wir arbeiten</h2>
+      <p>SPARFIND verdient an Partnerlinks. Damit das für dich fair bleibt, halten wir uns an vier Regeln — und schreiben sie hier hin, statt sie im Kleingedruckten zu verstecken.</p>
+      <div class="honest-grid">
+        <div class="hitem">
+          <div class="i" aria-hidden="true">📊</div>
+          <div><strong>Echte Zahlen</strong><span>Verkaufszahlen und Bewertungen kommen direkt vom Händler. Wir erfinden keine.</span></div>
+        </div>
+        <div class="hitem">
+          <div class="i" aria-hidden="true">🏷️</div>
+          <div><strong>Keine Fantasie-Rabatte</strong><span>Ein Prozent-Badge gibt es nur, wenn der Streichpreis beim Händler wirklich steht.</span></div>
+        </div>
+        <div class="hitem">
+          <div class="i" aria-hidden="true">🕐</div>
+          <div><strong>Preis mit Datum</strong><span>Preise ändern sich. Jede Karte zeigt, wann zuletzt geprüft wurde.</span></div>
+        </div>
+        <div class="hitem">
+          <div class="i" aria-hidden="true">🤝</div>
+          <div><strong>Werbung ist markiert</strong><span>Jeder Partnerlink ist gekennzeichnet. Für dich wird nichts teurer.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">
+      <a href="/" class="logo"><span class="logo-mark" aria-hidden="true">✦</span>SPAR<span>FIND</span></a>
+      <p>Wir suchen Trends und Angebote, prüfen sie auf echte Nachfrage und verlinken sie. Gekauft wird beim jeweiligen Händler.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Entdecken</h4>
+      <a href="#deals">Alle Deals</a>
+      <a href="#transparenz">Wie wir arbeiten</a>
+    </div>
+    <div class="foot-col">
+      <h4>Rechtliches</h4>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+  <div class="wrap foot-legal">
+    <strong>Werbehinweis:</strong> Alle Produktlinks auf dieser Seite sind Partnerlinks (Affiliate-Links). Kaufst du über einen dieser Links, erhalten wir eine Provision vom Händler. Für dich ändert sich der Preis dadurch nicht. Verkauf, Versand, Rechnung und Gewährleistung liegen ausschließlich beim jeweiligen Händler.<br>
+    Alle Preisangaben inkl. gesetzlicher MwSt., zzgl. Versandkosten des Händlers. Preise und Verfügbarkeit können sich jederzeit ändern — es gilt der Preis beim Händler zum Zeitpunkt des Kaufs.
+    <div style="margin-top:12px">© <span id="yr"></span> SPARFIND</div>
+  </div>
+</footer>
+
+<script src="deals.js"></script>
+<script>
+(function(){
+  'use strict';
+
+  const $  = s => document.querySelector(s);
+  const grid = $('#grid');
+  const euro = n => n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
+
+  /* Ein Preis, der drei Tage alt ist, ist bei Temu keine Tatsache mehr,
+     sondern eine Vermutung. Die Karte sagt das dann auch. */
+  const isStale = iso => {
+    const d = (Date.now() - new Date(iso + 'T00:00:00').getTime()) / 86400000;
+    return !isFinite(d) || d > STALE_AFTER_DAYS;
+  };
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+  /* Nur echte Streichpreise ergeben ein Rabatt-Badge. */
+  function discount(d){
+    if (!d.listPrice || !d.price || d.listPrice <= d.price) return null;
+    return Math.round((1 - d.price / d.listPrice) * 100);
+  }
+
+  function cardHTML(d){
+    const shop = MERCHANTS[d.merchant] || { name: d.merchant, color:'#666' };
+    const off  = discount(d);
+    const stale = d.price != null && isStale(d.checkedAt);
+
+    const media = d.image
+      ? `<img src="${esc(d.image)}" alt="${esc(d.title)}" loading="lazy">`
+      : `<span class="ph" aria-hidden="true">✦</span>`;
+
+    let priceBlock;
+    if (d.price == null){
+      priceBlock = `<span class="p-ask">Preis beim Händler prüfen</span>`;
+    } else {
+      priceBlock =
+        `<span class="p-now">${euro(d.price)}</span>` +
+        (d.listPrice ? `<span class="p-old">${euro(d.listPrice)}</span>` : '') +
+        (stale ? `<span class="p-stale">Stand ${d.checkedAt.split('-').reverse().join('.')} — Preis kann abweichen</span>` : '');
+    }
+
+    const proof = [];
+    if (d.sold)   proof.push(`<span><b>${d.sold.toLocaleString('de-DE')}+</b> verkauft</span>`);
+    if (d.rating) proof.push(`<span class="stars">★ ${String(d.rating).replace('.',',')}</span>`);
+
+    return `
+    <a class="card" href="${esc(d.url)}" target="_blank" rel="sponsored nofollow noopener"
+       data-cat="${esc(d.category)}" data-search="${esc((d.title+' '+(d.note||'')+' '+shop.name).toLowerCase())}">
+      <div class="card-img${d.image ? '' : ' empty'}">
+        ${media}
+        <span class="tag-shop" style="background:${shop.color}">${esc(shop.name)}</span>
+        ${off ? `<span class="tag-off">−${off}%</span>` : ''}
+        <span class="tag-ad">Anzeige</span>
+      </div>
+      <div class="card-body">
+        <h3 class="card-title">${esc(d.title)}</h3>
+        ${d.note ? `<p class="card-note">${esc(d.note)}</p>` : ''}
+        ${proof.length ? `<div class="proof">${proof.join('')}</div>` : ''}
+        <div class="price-row">${priceBlock}</div>
+        <span class="cta">Zum Angebot <span class="arr">→</span></span>
+      </div>
+    </a>`;
+  }
+
+  /* Karten blenden sich beim Scrollen ein — einmalig, dann bleibt es ruhig. */
+  const reveal = new IntersectionObserver((entries, obs) => {
+    entries.forEach((e, i) => {
+      if (!e.isIntersecting) return;
+      setTimeout(() => e.target.classList.add('in'), Math.min(i * 45, 260));
+      obs.unobserve(e.target);
+    });
+  }, { rootMargin: '80px' });
+
+  let activeCat = 'alle';
+
+  function render(){
+    const q = ($('#q').value || '').trim().toLowerCase();
+    const words = q.split(/\s+/).filter(Boolean);
+
+    const hits = DEALS.filter(d => {
+      if (activeCat !== 'alle' && d.category !== activeCat) return false;
+      if (!words.length) return true;
+      const hay = (d.title + ' ' + (d.note||'') + ' ' + (MERCHANTS[d.merchant]||{}).name).toLowerCase();
+      return words.every(w => hay.includes(w));   // mehrere Wörter grenzen ein
+    });
+
+    $('#grid-count').textContent = hits.length
+      ? hits.length + (hits.length === 1 ? ' Angebot' : ' Angebote')
+      : '';
+
+    if (!hits.length){
+      grid.innerHTML = `
+        <div class="empty-state">
+          <div class="ico" aria-hidden="true">🔍</div>
+          <h3>Hier ist gerade nichts</h3>
+          <p>${q ? 'Für „' + esc(q) + '“ haben wir keinen Treffer.' : 'In dieser Kategorie sammeln wir noch.'}</p>
+          <button type="button" id="reset">Alle Deals zeigen</button>
+        </div>`;
+      $('#reset').addEventListener('click', () => {
+        $('#q').value = ''; activeCat = 'alle';
+        document.querySelectorAll('.cat').forEach(c =>
+          c.setAttribute('aria-selected', String(c.dataset.cat === 'alle')));
+        render();
+      });
+      return;
+    }
+
+    grid.innerHTML = hits.map(cardHTML).join('');
+    grid.querySelectorAll('.card').forEach(c => reveal.observe(c));
+  }
+
+  /* Kategorien */
+  $('#cats').innerHTML = CATEGORIES.map(c =>
+    `<button class="cat" role="tab" data-cat="${c.key}" aria-selected="${c.key === 'alle'}">
+       <span aria-hidden="true">${c.icon}</span>${c.label}
+     </button>`).join('');
+
+  $('#cats').addEventListener('click', e => {
+    const btn = e.target.closest('.cat');
+    if (!btn) return;
+    activeCat = btn.dataset.cat;
+    document.querySelectorAll('.cat').forEach(c =>
+      c.setAttribute('aria-selected', String(c === btn)));
+    $('#grid-title').textContent =
+      activeCat === 'alle' ? 'Aktuelle Deals'
+      : (CATEGORIES.find(c => c.key === activeCat) || {}).label;
+    render();
+  });
+
+  /* Suche: tippen filtert direkt, kein Klick nötig */
+  let t;
+  $('#q').addEventListener('input', () => { clearTimeout(t); t = setTimeout(render, 130); });
+
+  /* Kopfzahlen aus den echten Daten, nicht aus der Fantasie */
+  const animate = (el, to) => {
+    if (to === 0) { el.textContent = '0'; return; }
+    let n = 0;
+    const step = Math.max(1, Math.round(to / 28));
+    const iv = setInterval(() => {
+      n = Math.min(to, n + step);
+      el.textContent = n;
+      if (n >= to) clearInterval(iv);
+    }, 34);
+  };
+  animate($('#stat-deals'), DEALS.length);
+  animate($('#stat-cats'), new Set(DEALS.map(d => d.category)).size);
+  animate($('#stat-shops'), new Set(DEALS.map(d => d.merchant)).size);
+
+  $('#yr').textContent = new Date().getFullYear();
+  render();
+})();
+</script>
+</body>
+</html>
