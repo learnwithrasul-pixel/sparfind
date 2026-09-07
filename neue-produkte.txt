@@ -1,0 +1,45 @@
+# ============================================================
+#  SPARFIND — YENI URUN EKLEME
+# ============================================================
+#
+#  NASIL:
+#   1. Asagidaki gibi her urun icin bir blok yaz.
+#   2. Bloklarin arasinda BIR BOS SATIR birak.
+#   3. Resim varsa: dosyayi  bilder\  klasorune at, adini "bild:" yaz.
+#   4. YAYINLA.bat dosyasina cift tikla. Bitti.
+#
+#  # ile baslayan satirlar not, dikkate alinmaz.
+#  Bu dosya yayindan sonra tools\archiv\ icine tasinir, otomatik bosalir.
+#
+# ------------------------------------------------------------
+#  ZORUNLU alanlar:   link, titel, kat
+#  ISTEGE BAGLI:      preis, statt, bild, verkauft, sterne, text
+#
+#  kat sunlardan biri (Turkcesi de olur):
+#     haushalt (ev)   kueche (mutfak)   beauty (guzellik)
+#     technik (teknik)   werkzeug (alet)   garten (bahce)
+#
+#  preis: 39,99  ya da  39.99  — ikisi de olur, € yazmana gerek yok
+#  statt: eski fiyat. SADECE saticida gercekten yaziyorsa yaz.
+#         Yoksa hic yazma — uydurma indirim yuzde isareti koymayiz.
+#  verkauft: gercek satis adedi (ornek: 3000)
+#  sterne: 4,6
+#  text:   tek cumle, urun ne ise yariyor
+# ------------------------------------------------------------
+#
+#  ORNEK (kopyala, doldur, # isaretlerini sil):
+#
+# link:     https://temu.to/k/xxxxxxxxx
+# titel:    Akku-Staubsauger mit 46 kPa Saugkraft
+# kat:      ev
+# preis:    39,99
+# statt:    69,99
+# bild:     staubsauger.jpg
+# verkauft: 3000
+# sterne:   4,6
+# text:     Kabellos, beutellos, mit Wandhalterung.
+#
+# ============================================================
+#  URUNLERINI ASAGIYA YAZ:
+# ============================================================
+

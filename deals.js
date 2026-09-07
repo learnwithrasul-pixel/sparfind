@@ -93,6 +93,8 @@ const CATEGORIES = [
  * Preise fehlen bewusst, solange sie nicht verifiziert sind — die Karte zeigt
  * dann "Preis beim Händler prüfen" statt einer Zahl, die falsch sein könnte.
  */
+/* DEALS:START — ab hier schreibt tools/build-deals.js. Nicht von Hand aendern,
+   sonst ist die naechste Aenderung wieder weg. Neue Produkte: neue-produkte.txt */
 const DEALS = [
   {
     id: 'temu-601099664725495',
@@ -115,3 +117,4 @@ const DEALS = [
     note: 'Frisiertisch mit Stauraum und Halter für Stylingtools.',
   },
 ];
+/* DEALS:END */
