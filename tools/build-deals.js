@@ -37,6 +37,24 @@ const KAT = {
 };
 const KAT_LISTE = [...new Set(Object.values(KAT))].join(', ');
 
+/**
+ * Links, die wie ein Partnerlink aussehen und keiner sind. Gemessen am
+ * 07.09.2026: share.temu.com loest zu einer Adresse auf, die nur `goods_id`
+ * traegt — kein _x_cid, kein _x_ads_channel. Das ist der Link zum Weitergeben
+ * an Freunde, nicht der des Partnerprogramms.
+ *
+ * Ohne diesen Eintrag greift unten die Regel fuer "temu.com" (share.temu.com
+ * enthaelt die Zeichenkette), der Link waere stillschweigend durchgegangen und
+ * haette Traffic verschenkt, ohne dass es irgendwo auffaellt.
+ */
+const NICHT_VERDIENEND = [
+  {
+    muster: 'share.temu.com',
+    grund: 'ist der Freunde-Teilen-Link ohne Partnerkennung — er verdient nichts. '
+      + 'Nimm den temu.to/k/... Link aus dem Partnerprogramm.',
+  },
+];
+
 const HAENDLER = [
   { host: 'temu.to', key: 'temu', partner: true },
   { host: 'temu.com', key: 'temu', partner: false },
@@ -107,8 +125,11 @@ function pruefe(b) {
   if (!katRoh) fehler.push('kat: fehlt (' + KAT_LISTE + ')');
   else if (!kat) fehler.push('kat: "' + katRoh + '" kenne ich nicht (' + KAT_LISTE + ')');
 
+  const taub = NICHT_VERDIENEND.find((x) => url.includes(x.muster));
+  if (taub) fehler.push('link: ' + taub.muster + ' ' + taub.grund);
+
   const h = HAENDLER.find((x) => url.includes(x.host));
-  if (url && !h) {
+  if (url && !taub && !h) {
     fehler.push('link: unbekannter Haendler — erlaubt: ' + HAENDLER.map((x) => x.host).join(', '));
   }
 

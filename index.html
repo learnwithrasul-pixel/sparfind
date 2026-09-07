@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SPARFIND — Trends &amp; Deals, ehrlich geprüft</title>
-<meta name="description" content="Handverlesene Angebote aus dem Netz: Haushalt, Küche, Beauty, Technik. Mit echten Verkaufszahlen statt erfundener Rabatte.">
+<meta name="description" content="Handverlesene Angebote aus dem Netz: Homeoffice, Haushalt, Technik und mehr. Mit Prüfdatum am Preis, ohne erfundene Rabatte.">
 <meta name="theme-color" content="#0b0d12">
 
 <!-- Social-Vorschau: Pinterest und TikTok ziehen sich diese Felder -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SPARFIND">
 <meta property="og:title" content="SPARFIND — Trends & Deals, ehrlich geprüft">
-<meta property="og:description" content="Handverlesene Angebote mit echten Verkaufszahlen. Kein erfundener Countdown, keine Fantasie-Rabatte.">
+<meta property="og:description" content="Handverlesene Angebote mit Prüfdatum am Preis. Kein erfundener Countdown, keine Fantasie-Rabatte.">
 <meta property="og:locale" content="de_DE">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -230,6 +230,7 @@ header{
 .p-uvp{font-size:13px;color:var(--txt-faint)}
 .p-ask{font-size:14.5px;font-weight:600;color:var(--txt-dim)}
 .p-stale{font-size:11.5px;color:var(--accent-2);width:100%;margin-top:-3px}
+.p-datum{font-size:11.5px;color:var(--txt-faint);width:100%;margin-top:-3px}
 
 .cta{
   display:flex;align-items:center;justify-content:center;gap:7px;
@@ -333,9 +334,9 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
 
 <main>
   <section class="hero wrap">
-    <div class="badge-live"><span class="pulse" aria-hidden="true"></span>Täglich neu geprüft</div>
+    <div class="badge-live"><span class="pulse" aria-hidden="true"></span><span id="badge-stand">Preise geprüft</span></div>
     <h1>Trends finden.<br><em>Clever sparen.</em></h1>
-    <p>Handverlesene Angebote aus dem Netz — mit echten Verkaufszahlen statt erfundener Rabatte und ohne künstlichen Countdown.</p>
+    <p>Handverlesene Angebote aus dem Netz — jeder Preis mit dem Datum seiner Prüfung, ohne erfundene Rabatte und ohne künstlichen Countdown.</p>
     <div class="hero-stats">
       <div class="hstat"><div class="n" id="stat-deals">0</div><div class="l">geprüfte Deals</div></div>
       <div class="hstat"><div class="n" id="stat-cats">0</div><div class="l">Kategorien</div></div>
@@ -393,7 +394,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
       <div class="honest-grid">
         <div class="hitem">
           <div class="i" aria-hidden="true">📊</div>
-          <div><strong>Echte Zahlen</strong><span>Verkaufszahlen und Bewertungen kommen direkt vom Händler. Wir erfinden keine.</span></div>
+          <div><strong>Nur belegte Zahlen</strong><span>Verkaufszahlen und Bewertungen zeigen wir nur, wenn der Händler sie selbst angibt. Erfunden wird nichts — fehlt eine Angabe, bleibt sie weg.</span></div>
         </div>
         <div class="hitem">
           <div class="i" aria-hidden="true">🏷️</div>
@@ -401,7 +402,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
         </div>
         <div class="hitem">
           <div class="i" aria-hidden="true">🕐</div>
-          <div><strong>Preis mit Datum</strong><span>Preise ändern sich. Jede Karte zeigt, wann zuletzt geprüft wurde.</span></div>
+          <div><strong>Preis mit Prüfdatum</strong><span>Geprüft heißt: Preis, Vergleichspreis und Verfügbarkeit beim Händler nachgesehen — nicht, dass wir das Produkt selbst getestet hätten. Jede Karte trägt ihr Datum.</span></div>
         </div>
         <div class="hitem">
           <div class="i" aria-hidden="true">🤝</div>
@@ -431,7 +432,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
   </div>
   <div class="wrap foot-legal">
     <strong>Werbehinweis:</strong> Alle Produktlinks auf dieser Seite sind Partnerlinks (Affiliate-Links). Kaufst du über einen dieser Links, erhalten wir eine Provision vom Händler. Für dich ändert sich der Preis dadurch nicht. Verkauf, Versand, Rechnung und Gewährleistung liegen ausschließlich beim jeweiligen Händler.<br>
-    Alle Preisangaben inkl. gesetzlicher MwSt., zzgl. Versandkosten des Händlers. Preise und Verfügbarkeit können sich jederzeit ändern — es gilt der Preis beim Händler zum Zeitpunkt des Kaufs.
+    Preise und Verfügbarkeit können sich jederzeit ändern. Maßgeblich ist der Preis auf der Händlerseite zum Zeitpunkt des Kaufs. Versandkosten, Einfuhrabgaben und weitere Kosten können beim Händler zusätzlich anfallen.
     <div style="margin-top:12px">© <span id="yr"></span> SPARFIND</div>
   </div>
 </footer>
@@ -489,7 +490,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
         `<span class="p-now">${euro(d.price)}</span>` +
         (d.listPrice ? `<span class="p-old">${euro(d.listPrice)}</span>` : '') +
         (!d.listPrice && d.uvp ? `<span class="p-uvp">UVP ${euro(d.uvp)}</span>` : '') +
-        (stale ? `<span class="p-stale">Stand ${d.checkedAt.split('-').reverse().join('.')} — Preis kann abweichen</span>` : '');
+        `<span class="${stale ? 'p-stale' : 'p-datum'}">Preis geprüft: ${d.checkedAt.split('-').reverse().join('.')}` +
+          `${stale ? ' — kann inzwischen abweichen' : ''}</span>`;
     }
 
     const proof = [];
@@ -503,7 +505,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
         ${media}
         <span class="tag-shop" style="background:${shop.color}">${esc(shop.name)}</span>
         ${off ? `<span class="tag-off">−${off}%</span>` : ''}
-        <span class="tag-ad">Anzeige</span>
+        <span class="tag-ad">Anzeige · Partnerlink</span>
       </div>
       <div class="card-body">
         <h3 class="card-title">${esc(d.title)}</h3>
@@ -601,6 +603,12 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
       if (n >= to) clearInterval(iv);
     }, 34);
   };
+  const juengste = DEALS.map(d => d.checkedAt).filter(Boolean).sort().pop();
+  if (juengste) {
+    $('#badge-stand').textContent =
+      'Preise geprüft am ' + juengste.split('-').reverse().join('.');
+  }
+
   animate($('#stat-deals'), DEALS.length);
   animate($('#stat-cats'), new Set(DEALS.map(d => d.category)).size);
   animate($('#stat-shops'), new Set(DEALS.map(d => d.merchant)).size);
