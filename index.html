@@ -241,8 +241,6 @@ header{
    wie ein frueherer Verkaufspreis aussehen, und das war sie nie. */
 .p-uvp{font-size:13px;color:var(--txt-faint)}
 .p-ask{font-size:14.5px;font-weight:600;color:var(--txt-dim)}
-.p-stale{font-size:11.5px;color:var(--accent-2);width:100%;margin-top:-3px}
-.p-datum{font-size:11.5px;color:var(--txt-faint);width:100%;margin-top:-3px}
 
 .cta{
   display:flex;align-items:center;justify-content:center;gap:7px;
@@ -348,7 +346,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
   <section class="hero wrap">
     <div class="badge-live"><span class="pulse" aria-hidden="true"></span><span id="badge-stand">Preise geprüft</span></div>
     <h1>Trends finden.<br><em>Clever sparen.</em></h1>
-    <p>Handverlesene Angebote aus dem Netz — jeder Preis mit dem Datum seiner Prüfung, ohne erfundene Rabatte und ohne künstlichen Countdown.</p>
+    <p>Handverlesene Angebote aus dem Netz — geprüfte Preise mit Datum, ohne erfundene Rabatte und ohne künstlichen Countdown.</p>
     <div class="hero-stats">
       <div class="hstat"><div class="n" id="stat-deals">0</div><div class="l">geprüfte Deals</div></div>
       <div class="hstat"><div class="n" id="stat-cats">0</div><div class="l">Kategorien</div></div>
@@ -414,7 +412,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
         </div>
         <div class="hitem">
           <div class="i" aria-hidden="true">🕐</div>
-          <div><strong>Preis mit Prüfdatum</strong><span>Geprüft heißt: Preis, Vergleichspreis und Verfügbarkeit beim Händler nachgesehen — nicht, dass wir das Produkt selbst getestet hätten. Jede Karte trägt ihr Datum.</span></div>
+          <div><strong>Preis mit Prüfdatum</strong><span>Geprüft heißt: Preis, Vergleichspreis und Verfügbarkeit beim Händler nachgesehen — nicht, dass wir das Produkt selbst getestet hätten. Das Datum der letzten Prüfung steht oben auf der Seite.</span></div>
         </div>
         <div class="hitem">
           <div class="i" aria-hidden="true">🤝</div>
@@ -474,13 +472,6 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
   const grid = $('#grid');
   const euro = n => n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
 
-  /* Ein Preis, der drei Tage alt ist, ist bei Temu keine Tatsache mehr,
-     sondern eine Vermutung. Die Karte sagt das dann auch. */
-  const isStale = iso => {
-    const d = (Date.now() - new Date(iso + 'T00:00:00').getTime()) / 86400000;
-    return !isFinite(d) || d > STALE_AFTER_DAYS;
-  };
-
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
   /* Nur echte Streichpreise ergeben ein Rabatt-Badge. */
@@ -504,7 +495,6 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
   function cardHTML(d){
     const shop = MERCHANTS[d.merchant] || { name: d.merchant, color:'#666' };
     const off  = discount(d);
-    const stale = d.price != null && isStale(d.checkedAt);
 
     const media = d.image
       ? `<img src="${esc(d.image)}" alt="${esc(d.title)}" loading="lazy">`
@@ -518,8 +508,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
         `<span class="p-now">${euro(d.price)}</span>` +
         (d.listPrice ? `<span class="p-old">${euro(d.listPrice)}</span>` : '') +
         (!d.listPrice && d.uvp ? `<span class="p-uvp">UVP ${euro(d.uvp)}</span>` : '') +
-        `<span class="${stale ? 'p-stale' : 'p-datum'}">Preis geprüft: ${d.checkedAt.split('-').reverse().join('.')}` +
-          `${stale ? ' — kann inzwischen abweichen' : ''}</span>`;
+        '';
     }
 
     const proof = [];

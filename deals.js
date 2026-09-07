@@ -27,16 +27,15 @@
  *   note       ein Satz, warum der Deal etwas taugt
  *
  * REGELN, die nicht verhandelbar sind:
- * 1. Preise ändern sich bei Temu/AliExpress ständig. Deshalb trägt jede Karte
- *    ihr `checkedAt`-Datum. Ist ein Preis älter als STALE_AFTER_DAYS, zeigt die
- *    Seite ihn als "Preis kann abweichen" statt als Tatsache.
+ * 1. Preise ändern sich bei Temu/AliExpress ständig. Jeder Deal trägt sein
+ *    `checkedAt`-Datum; die Seite zeigt den jüngsten davon oben im Badge —
+ *    einmal statt auf jeder Karte.
  * 2. `listPrice` niemals erfinden, um einen Rabatt größer aussehen zu lassen.
  *    Ohne echten Streichpreis gibt es kein Prozent-Badge.
  * 3. Kein künstlicher Zeitdruck, keine erfundenen Countdowns.
  * 4. Jeder Link ist Werbung und wird als solche gekennzeichnet.
  */
 
-const STALE_AFTER_DAYS = 3;
 
 /**
  * PARTNERLINKS — wo das Geld herkommt.
