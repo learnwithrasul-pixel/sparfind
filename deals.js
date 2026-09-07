@@ -34,6 +34,44 @@
 
 const STALE_AFTER_DAYS = 3;
 
+/**
+ * PARTNERLINKS — wo das Geld herkommt.
+ *
+ * Ein Produktlink verdient nur dann Provision, wenn er ein echter Partnerlink
+ * ist. Deshalb trennt diese Datei zwei Felder:
+ *
+ *   url     der normale Produktlink. Funktioniert immer, verdient nichts.
+ *   affUrl  der generierte Partnerlink. Verdient Provision.
+ *
+ * Die Seite verlinkt `affUrl`, sobald er da ist, sonst `url`. So ist die Seite
+ * nie kaputt, und `affiliateCoverage()` sagt jederzeit, wie viele Karten
+ * tatsaechlich Geld verdienen — statt es zu vermuten.
+ *
+ * Temu:       temu.to/k/… Kurzlinks SIND bereits Partnerlinks → direkt in `url`.
+ * AliExpress: Partnerlinks muessen im AliExpress-Portal je Produkt erzeugt
+ *             werden (s.click.aliexpress.com/e/…). Es gibt KEINEN Parameter,
+ *             den man an einen normalen Link anhaengen kann — wer das glaubt,
+ *             verschenkt die Provision. Deshalb steht hier nie eine erfundene ID.
+ */
+const AFFILIATE_HOSTS = ['temu.to', 's.click.aliexpress.com', 'amzn.to'];
+
+/** Der Link, den die Seite tatsaechlich setzt. */
+function dealUrl(d) {
+  return d.affUrl || d.url;
+}
+
+/** Verdient dieser Deal Provision? Geprueft am Host, nicht am Wunsch. */
+function isAffiliate(d) {
+  const u = dealUrl(d);
+  return AFFILIATE_HOSTS.some((h) => u.includes(h));
+}
+
+/** Wie viele Karten verdienen Geld — fuer die Konsole, nicht fuer Besucher. */
+function affiliateCoverage(deals) {
+  const paid = deals.filter(isAffiliate).length;
+  return { paid, total: deals.length };
+}
+
 const MERCHANTS = {
   temu:       { name: 'Temu',       color: '#ff7a00' },
   aliexpress: { name: 'AliExpress', color: '#e62e04' },

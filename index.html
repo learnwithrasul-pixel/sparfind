@@ -433,7 +433,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
     if (d.rating) proof.push(`<span class="stars">★ ${String(d.rating).replace('.',',')}</span>`);
 
     return `
-    <a class="card" href="${esc(d.url)}" target="_blank" rel="sponsored nofollow noopener"
+    <a class="card" href="${esc(dealUrl(d))}" target="_blank" rel="sponsored nofollow noopener"
        data-cat="${esc(d.category)}" data-search="${esc((d.title+' '+(d.note||'')+' '+shop.name).toLowerCase())}">
       <div class="card-img${d.image ? '' : ' empty'}">
         ${media}
