@@ -131,10 +131,20 @@ function pruefe(b) {
     fehler.push('sterne: muss zwischen 0 und 5 liegen');
   }
 
+  // Eine mitgelieferte id gewinnt: der Chrome-Sammler kennt die Artikelnummer
+  // des Haendlers und die bleibt gleich, egal ob der Kurzlink oder die lange
+  // Adresse eingetragen wird. Aus dem Link geraten wird nur, wenn keine da ist.
+  const eigeneId = (f.id || '').trim();
+  if (eigeneId && !/^[a-z]+-[a-z0-9]+$/i.test(eigeneId)) {
+    fehler.push('id: "' + eigeneId + '" passt nicht ins Muster haendler-nummer');
+  }
+
+  // Alle Fehler auf einmal melden — wer dreimal hintereinander neu starten
+  // muss, um drei Zeilen zu erfahren, macht es beim vierten Mal gar nicht mehr.
   if (fehler.length) return { fehler, nr: b.nr, titel };
 
   const deal = {
-    id: machId(url, h.key),
+    id: eigeneId || machId(url, h.key),
     title: titel,
     category: kat,
     merchant: h.key,

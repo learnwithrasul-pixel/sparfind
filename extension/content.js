@@ -79,6 +79,22 @@
     return 'unbekannt';
   })();
 
+  /**
+   * Die Artikelnummer des Haendlers — die einzige Kennung, die gleich bleibt,
+   * egal ob die Seite ueber den normalen Link oder den Partner-Kurzlink
+   * erreicht wurde. Ohne sie liegt dasselbe Produkt zweimal auf der Seite,
+   * sobald der Link wechselt.
+   */
+  function artikelNummer() {
+    const u = location.href;
+    const m =
+      u.match(/[?&]goods_id=(\d+)/) ||
+      u.match(/\/item\/(\d+)/) ||
+      u.match(/\/dp\/([A-Z0-9]{10})/) ||
+      u.match(/[?&]asin=([A-Z0-9]{10})/i);
+    return m ? m[1] : '';
+  }
+
   function titelLesen() {
     const wahl = {
       amazon: '#productTitle',
@@ -325,6 +341,10 @@
         <h2>SPARFIND'e ekle</h2>
         <p class="unter">${HAENDLER} · sayfadan okundu, istediğini değiştir</p>
 
+        <label>Partner linki (temu.to/k/... ) *</label>
+        <input id="f-aff" placeholder="https://temu.to/k/..." class="leer">
+        <p class="hinweis">Temu uygulamasında ürünü paylaş → çıkan kısa link. <b>Bu olmadan kart para kazanmaz.</b></p>
+
         <label>Başlık *</label>
         <input id="f-titel" value="${(titel || '').replace(/"/g, '&quot;')}" class="${titel ? '' : 'leer'}">
 
@@ -418,11 +438,20 @@
       // Der Block hat genau das Format, das tools/build-deals.js erwartet.
       // __BILD__ ersetzt der Hintergrund, sobald das Bild wirklich liegt —
       // sonst zeigt die Zeile auf eine Datei, die nie ankam.
+      // Der Partnerlink ist der Link, der Geld verdient. Steht keiner da,
+      // geht die normale Produktadresse mit — die Karte funktioniert dann,
+      // verdient aber nichts, und genau das sagt die Bestaetigung auch.
+      const aff = wert('f-aff');
+      const nummer = artikelNummer();
       const zeilen = [
-        'link:     ' + location.href.split('?')[0],
+        'link:     ' + (aff || location.href.split('?')[0]),
         'titel:    ' + t,
         'kat:      ' + k,
       ];
+      // Feste id aus der Artikelnummer: sonst gilt derselbe Artikel als neu,
+      // sobald er einmal ueber den Kurzlink und einmal ueber die lange
+      // Adresse eingetragen wird.
+      if (nummer) zeilen.splice(1, 0, 'id:       ' + HAENDLER + '-' + nummer);
       const p = wert('f-preis');
       const s = wert('f-statt');
       const v = wert('f-verkauft');
@@ -443,9 +472,10 @@
         },
         (antwort) => {
           huelle.querySelector('.fenster').innerHTML = antwort && antwort.ok
-            ? `<div class="fertig"><div class="gross">✓</div>
+            ? `<div class="fertig"><div class="gross">${aff ? '✓' : '⚠'}</div>
                  <h2>Kaydedildi</h2>
                  <p class="unter">Downloads\\sparfind\\ klasörüne düştü${antwort.bild ? ' (resimle birlikte)' : ' — resimsiz'}.<br>
+                 ${aff ? '' : '<b style="color:#ffb03b">Partner linki yok — bu kart komisyon kazanmaz.</b><br>'}
                  Bitirince <b>YAYINLA.bat</b> çift tıkla.</p></div>`
             : `<div class="fertig"><div class="gross">✕</div>
                  <h2>Kaydedilemedi</h2>
