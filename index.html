@@ -124,6 +124,22 @@ header{
 .hero p{font-size:clamp(15px,2.2vw,18.5px);color:var(--txt-dim);max-width:600px;margin:0 auto 30px}
 
 .hero-stats{display:flex;justify-content:center;gap:44px;flex-wrap:wrap;margin-top:8px}
+
+/* Klartext-Hinweis: sichtbar, aber nicht schreiend. Er soll gelesen und
+   geglaubt werden, nicht weggeklickt — also ruhige Farben statt Alarmrot. */
+.klartext{display:flex;gap:16px;align-items:flex-start;background:var(--bg-soft);
+  border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:14px;padding:22px 24px;margin:6px 0 34px}
+/* width UND height: in der mobilen Spaltenrichtung wird flex-basis zur Hoehe,
+   die Breite faellt sonst auf die Textbreite zurueck — aus dem Kreis wird ein
+   duennes Oval. */
+.kt-icon{flex:0 0 28px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;
+  font-style:italic;margin-top:2px}
+.kt-text h2{font-size:16.5px;font-weight:800;letter-spacing:-.3px;margin:0 0 8px}
+.kt-text p{color:var(--txt-dim);font-size:14.2px;line-height:1.65;margin:0 0 9px}
+.kt-text p:last-child{margin-bottom:0}
+.kt-text strong{color:var(--txt);font-weight:600}
 .hstat .n{font-size:27px;font-weight:800;letter-spacing:-.8px}
 .hstat .l{font-size:12.5px;color:var(--txt-faint);margin-top:1px}
 
@@ -270,6 +286,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
   .head{height:60px;gap:12px}
   .search{max-width:none}
   .head-links{display:none}
+  .klartext{flex-direction:column;gap:14px;padding:20px 18px}
   .hero{padding:52px 0 40px}
   .hero-stats{gap:30px}
   .grid{grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:13px}
@@ -321,6 +338,37 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
       <div class="hstat"><div class="n" id="stat-cats">0</div><div class="l">Kategorien</div></div>
       <div class="hstat"><div class="n" id="stat-shops">0</div><div class="l">Händler</div></div>
     </div>
+  </section>
+
+  <!--
+    Steht bewusst ganz oben und nicht im Kleingedruckten: wer hier klickt, soll
+    vorher wissen, worauf er sich einlaesst. Preise bei Temu und AliExpress
+    aendern sich taeglich — das ist keine Panne, sondern die Natur der Sache.
+    Wer es verschweigt, verliert den Besucher genau einmal.
+  -->
+  <section class="wrap">
+    <aside class="klartext">
+      <div class="kt-icon" aria-hidden="true">i</div>
+      <div class="kt-text">
+        <h2>Zu den Preisen — kurz und ehrlich</h2>
+        <p>
+          SPARFIND ist eine <strong>Empfehlungsseite, kein Shop</strong>. Wir verkaufen nichts,
+          lagern nichts und versenden nichts. Wir suchen Trends und Rabatte, prüfen sie und
+          verlinken sie.
+        </p>
+        <p>
+          Preise bei Temu, AliExpress &amp; Co. ändern sich oft täglich. Jede Angabe hier ist eine
+          <strong>Momentaufnahme mit Prüfdatum</strong> — beim Händler kann der Preis inzwischen
+          niedriger oder höher sein. Verbindlich ist immer der Preis auf der Händlerseite im Moment
+          deines Kaufs, nicht die Zahl auf der Karte. Für die Angaben der Händler können wir keine
+          Gewähr übernehmen.
+        </p>
+        <p>
+          Vertragspartner ist ausschließlich der Händler: Versand, Rechnung, Gewährleistung,
+          Widerruf und Rückgabe liegen dort.
+        </p>
+      </div>
+    </aside>
   </section>
 
   <section class="cats wrap">
