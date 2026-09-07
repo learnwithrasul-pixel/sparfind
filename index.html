@@ -225,6 +225,9 @@ header{
 .price-row{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-top:auto;padding-top:5px}
 .p-now{font-size:21px;font-weight:800;letter-spacing:-.7px}
 .p-old{font-size:13.5px;color:var(--txt-faint);text-decoration:line-through}
+/* Die UVP traegt ihr Label sichtbar mit: durchgestrichen allein wuerde sie
+   wie ein frueherer Verkaufspreis aussehen, und das war sie nie. */
+.p-uvp{font-size:13px;color:var(--txt-faint)}
 .p-ask{font-size:14.5px;font-weight:600;color:var(--txt-dim)}
 .p-stale{font-size:11.5px;color:var(--accent-2);width:100%;margin-top:-3px}
 
@@ -452,9 +455,21 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
   const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
   /* Nur echte Streichpreise ergeben ein Rabatt-Badge. */
+  /**
+   * Zwei verschiedene Vergleichspreise, die man nicht vermischen darf:
+   *
+   *   listPrice  frueherer Verkaufspreis DES HAENDLERS. Wird durchgestrichen.
+   *   uvp        unverbindliche Preisempfehlung des HERSTELLERS.
+   *
+   * Die uvp als "vorher"-Preis auszugeben waere irrefuehrend — der Haendler hat
+   * nie so viel verlangt. Zulaessig und ehrlich ist der Vergleich nur, wenn
+   * "UVP" danebensteht; genau so zeigt Temu ihn selbst an. Deshalb bekommt die
+   * uvp ihr eigenes Label statt eines stillen Streichpreises.
+   */
   function discount(d){
-    if (!d.listPrice || !d.price || d.listPrice <= d.price) return null;
-    return Math.round((1 - d.price / d.listPrice) * 100);
+    const ref = d.listPrice || d.uvp;
+    if (!ref || !d.price || ref <= d.price) return null;
+    return Math.round((1 - d.price / ref) * 100);
   }
 
   function cardHTML(d){
@@ -473,6 +488,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
       priceBlock =
         `<span class="p-now">${euro(d.price)}</span>` +
         (d.listPrice ? `<span class="p-old">${euro(d.listPrice)}</span>` : '') +
+        (!d.listPrice && d.uvp ? `<span class="p-uvp">UVP ${euro(d.uvp)}</span>` : '') +
         (stale ? `<span class="p-stale">Stand ${d.checkedAt.split('-').reverse().join('.')} — Preis kann abweichen</span>` : '');
     }
 
@@ -547,10 +563,16 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
   }
 
   /* Kategorien */
-  $('#cats').innerHTML = CATEGORIES.map(c =>
-    `<button class="cat" role="tab" data-cat="${c.key}" aria-selected="${c.key === 'alle'}">
-       <span aria-hidden="true">${c.icon}</span>${c.label}
-     </button>`).join('');
+  /* Nur Kategorien zeigen, in denen wirklich etwas liegt. Ein Filter, der auf
+     eine leere Seite fuehrt, sieht nach einem Fehler aus — und der Besucher
+     probiert kein zweites Mal. */
+  const belegt = new Set(DEALS.map(d => d.category));
+  $('#cats').innerHTML = CATEGORIES
+    .filter(c => c.key === 'alle' || belegt.has(c.key))
+    .map(c =>
+      `<button class="cat" role="tab" data-cat="${c.key}" aria-selected="${c.key === 'alle'}">
+         <span aria-hidden="true">${c.icon}</span>${c.label}
+       </button>`).join('');
 
   $('#cats').addEventListener('click', e => {
     const btn = e.target.closest('.cat');

@@ -23,11 +23,15 @@ const ARCHIV = path.join(ROOT, 'tools', 'archiv');
 
 /* ---------- Kategorien: deutsch und tuerkisch, damit niemand umdenken muss ---------- */
 const KAT = {
+  buero: 'buero', 'büro': 'buero', buro: 'buero', homeoffice: 'buero',
+  ofis: 'buero', masa: 'buero', schreibtisch: 'buero', moebel: 'buero', 'möbel': 'buero',
   haushalt: 'haushalt', haus: 'haushalt', ev: 'haushalt', temizlik: 'haushalt',
   kueche: 'kueche', 'küche': 'kueche', kuche: 'kueche', mutfak: 'kueche',
   beauty: 'beauty', kosmetik: 'beauty', haar: 'beauty', guzellik: 'beauty',
   'güzellik': 'beauty', sac: 'beauty', 'saç': 'beauty',
   technik: 'technik', teknik: 'technik', elektronik: 'technik', elektro: 'technik',
+  auto: 'auto', araba: 'auto', kfz: 'auto', oto: 'auto',
+  reise: 'reise', koffer: 'reise', seyahat: 'reise', valiz: 'reise', bavul: 'reise',
   werkzeug: 'werkzeug', alet: 'werkzeug', takim: 'werkzeug', 'takım': 'werkzeug',
   garten: 'garten', bahce: 'garten', 'bahçe': 'garten',
 };
@@ -118,6 +122,16 @@ function pruefe(b) {
     fehler.push('statt: muss groesser als preis sein, sonst ist es kein Rabatt');
   }
 
+  // uvp ist die Herstellerempfehlung, nicht der fruehere Preis des Haendlers.
+  // Sie wird auf der Karte mit dem Label "UVP" gezeigt statt still
+  // durchgestrichen — durchgestrichen hiesse "so teuer war es hier mal", und
+  // das stimmt nicht.
+  const uvp = preisAusText(f.uvp);
+  if (uvp !== null && preis === null) fehler.push('uvp: ohne preis sinnlos');
+  if (uvp !== null && preis !== null && uvp <= preis) {
+    fehler.push('uvp: muss groesser als preis sein');
+  }
+
   // Bild: entweder eine Datei in bilder/ oder eine vollstaendige URL.
   let bild = (f.bild || f.image || '').trim();
   if (bild && !/^https?:\/\//i.test(bild)) {
@@ -156,6 +170,7 @@ function pruefe(b) {
   deal.url = url;
   if (h.partner) deal.affUrl = url;
   if (listPreis !== null) deal.listPrice = listPreis;
+  if (uvp !== null) deal.uvp = uvp;
   if (bild) deal.image = bild;
   if (Number.isFinite(verkauft) && verkauft > 0) deal.sold = verkauft;
   if (sterne !== null) deal.rating = sterne;
@@ -164,7 +179,7 @@ function pruefe(b) {
 }
 
 /* ---------- deals.js schreiben ---------- */
-const ORDER = ['id', 'title', 'category', 'merchant', 'price', 'listPrice', 'url', 'affUrl',
+const ORDER = ['id', 'title', 'category', 'merchant', 'price', 'listPrice', 'uvp', 'url', 'affUrl',
   'image', 'sold', 'rating', 'checkedAt', 'note'];
 
 function alsQuelltext(deals) {

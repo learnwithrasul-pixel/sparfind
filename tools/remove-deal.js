@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const DEALSJS = path.join(__dirname, '..', 'deals.js');
-const ORDER = ['id', 'title', 'category', 'merchant', 'price', 'listPrice', 'url', 'affUrl',
+const ORDER = ['id', 'title', 'category', 'merchant', 'price', 'listPrice', 'uvp', 'url', 'affUrl',
   'image', 'sold', 'rating', 'checkedAt', 'note'];
 
 const quelle = fs.readFileSync(DEALSJS, 'utf8');
