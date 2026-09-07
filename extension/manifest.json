@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "SPARFIND Sammler",
+  "version": "1.0.0",
+  "description": "Produkt von der geoeffneten Haendlerseite uebernehmen und fuer sparfind.de vorbereiten.",
+  "permissions": ["downloads", "storage"],
+  "host_permissions": [
+    "https://*.temu.com/*",
+    "https://*.aliexpress.com/*",
+    "https://*.amazon.de/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.temu.com/*",
+        "https://*.aliexpress.com/*",
+        "https://*.amazon.de/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

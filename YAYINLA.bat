@@ -17,6 +17,14 @@ if errorlevel 1 (
   exit /b 1
 )
 
+node tools\collect.js
+if errorlevel 1 (
+  echo   HATA: Chrome'dan gelenler alinamadi.
+  echo.
+  pause
+  exit /b 1
+)
+
 node tools\build-deals.js
 if errorlevel 1 (
   echo   Hicbir sey degismedi. Yukaridaki hatalari duzelt.
