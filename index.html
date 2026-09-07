@@ -437,6 +437,22 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
   </div>
 </footer>
 
+<script>
+/* HTTPS-Notbremse.
+   Richtig abgeschaltet wird HTTP im Repository unter Settings -> Pages
+   ("Enforce HTTPS") — das erledigt GitHub dann serverseitig, bevor die Seite
+   ueberhaupt geladen wird. Solange der Haken fehlt, faengt dieser Zweizeiler
+   den Fall ab: ein Besucher, dem der Browser "Nicht sicher" anzeigt, klickt
+   keinen Partnerlink an, und das merkt man nur daran, dass nichts passiert.
+   localhost bleibt ausgenommen, sonst ist die lokale Vorschau nicht mehr
+   aufrufbar. */
+(function () {
+  var h = location.hostname;
+  if (location.protocol === 'http:' && h !== 'localhost' && h !== '127.0.0.1') {
+    location.replace('https://' + h + location.pathname + location.search + location.hash);
+  }
+})();
+</script>
 <script src="deals.js"></script>
 <script>
 (function(){
