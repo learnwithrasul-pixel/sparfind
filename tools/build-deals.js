@@ -33,6 +33,8 @@ const KAT = {
   auto: 'auto', araba: 'auto', kfz: 'auto', oto: 'auto',
   reise: 'reise', koffer: 'reise', seyahat: 'reise', valiz: 'reise', bavul: 'reise',
   sport: 'sport', fitness: 'sport', hantel: 'sport', spor: 'sport',
+  mode: 'mode', tasche: 'mode', taschen: 'mode', canta: 'mode', 'çanta': 'mode',
+  mobilitaet: 'mobilitaet', 'mobilität': 'mobilitaet', roller: 'mobilitaet', scooter: 'mobilitaet',
   werkzeug: 'werkzeug', alet: 'werkzeug', takim: 'werkzeug', 'takım': 'werkzeug',
   garten: 'garten', bahce: 'garten', 'bahçe': 'garten',
 };
