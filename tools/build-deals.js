@@ -32,6 +32,7 @@ const KAT = {
   technik: 'technik', teknik: 'technik', elektronik: 'technik', elektro: 'technik',
   auto: 'auto', araba: 'auto', kfz: 'auto', oto: 'auto',
   reise: 'reise', koffer: 'reise', seyahat: 'reise', valiz: 'reise', bavul: 'reise',
+  sport: 'sport', fitness: 'sport', hantel: 'sport', spor: 'sport',
   werkzeug: 'werkzeug', alet: 'werkzeug', takim: 'werkzeug', 'takım': 'werkzeug',
   garten: 'garten', bahce: 'garten', 'bahçe': 'garten',
 };
