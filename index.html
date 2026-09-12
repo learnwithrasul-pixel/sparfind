@@ -368,6 +368,9 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
   html{scroll-behavior:auto}
 }
 </style>
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://sparfind.de/">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"SPARFIND","url":"https://sparfind.de/","description":"Handverlesene Angebote aus dem Netz: Homeoffice, Haushalt, Technik und mehr. Mit Prüfdatum am Preis, ohne erfundene Rabatte."}</script>
 </head>
 <body>
 
@@ -574,7 +577,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
 
     return `
     <a class="card" href="${esc(dealUrl(d))}" target="_blank" rel="sponsored nofollow noopener"
-       data-cat="${esc(d.category)}" data-search="${esc((d.title+' '+(d.note||'')+' '+shop.name).toLowerCase())}">
+       data-cat="${esc(d.category)}" data-search="${esc((d.title+' '+(d.note||'')+' '+shop.name).toLowerCase())}"
+       data-umami-event="deal-click" data-umami-event-id="${esc(d.id)}" data-umami-event-shop="${esc(shop.name)}">
       <div class="card-img${d.image ? '' : ' empty'}">
         ${media}
         <span class="tag-shop" style="background:${shop.color}">${esc(shop.name)}</span>
@@ -700,7 +704,7 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
 
     const karte = ({ d, off }) => `
       <a class="bd" href="${esc(dealUrl(d))}" target="_blank" rel="sponsored nofollow noopener"
-         title="${esc(d.title)}">
+         title="${esc(d.title)}" data-umami-event="deal-click" data-umami-event-id="${esc(d.id)}">
         <img src="${esc(klein(d.image))}" alt="" loading="eager" decoding="async"
              onerror="this.src='${esc(d.image)}'">
         <span class="bd-txt">
