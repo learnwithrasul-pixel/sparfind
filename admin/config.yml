@@ -21,8 +21,74 @@ public_folder: /bilder
 
 # Bewusst NICHT im Panel: deals.js. Die Datei schreibt das Skript
 # (YAYINLA.bat / tools/build-deals.js) — zwei Schreiber auf einer Datei
-# wuerden sich gegenseitig ueberschreiben.
+# wuerden sich gegenseitig ueberschreiben. Produkte aus dem Panel landen
+# deshalb in einer eigenen Datei (content/produkte.json); die Seite zeigt
+# beide Quellen zusammen.
 collections:
+  - name: produkte
+    label: Produkte
+    files:
+      - name: liste
+        label: Produktliste
+        file: content/produkte.json
+        fields:
+          - name: produkte
+            label: Produkte
+            label_singular: Produkt
+            widget: list
+            summary: "{{fields.title}} — {{fields.price}} €"
+            fields:
+              - { name: title, label: "Produktname", widget: string }
+              - name: category
+                label: Kategorie
+                widget: select
+                options:
+                  - { label: "Homeoffice", value: buero }
+                  - { label: "Haushalt", value: haushalt }
+                  - { label: "Technik", value: technik }
+                  - { label: "Beauty", value: beauty }
+                  - { label: "Auto", value: auto }
+                  - { label: "Reise", value: reise }
+                  - { label: "Sport", value: sport }
+                  - { label: "Taschen", value: mode }
+                  - { label: "Mobilität", value: mobilitaet }
+                  - { label: "Küche", value: kueche }
+                  - { label: "Werkzeug", value: werkzeug }
+                  - { label: "Garten", value: garten }
+              - name: merchant
+                label: Händler
+                widget: select
+                options:
+                  - { label: "Amazon", value: amazon }
+                  - { label: "AliExpress", value: aliexpress }
+                  - { label: "Temu", value: temu }
+              - name: price
+                label: "Preis (€)"
+                widget: number
+                value_type: float
+                min: 0
+                step: 0.01
+                required: false
+                hint: "Leer lassen, wenn unbekannt — die Karte zeigt dann „Preis beim Händler prüfen“."
+              - name: listPrice
+                label: "Alter Preis (durchgestrichen)"
+                widget: number
+                value_type: float
+                min: 0
+                step: 0.01
+                required: false
+                hint: "NUR eintragen, wenn der Händler diesen Preis selbst durchgestrichen zeigt."
+              - name: checkedAt
+                label: "Preis geprüft am"
+                widget: datetime
+                format: "YYYY-MM-DD"
+                date_format: "DD.MM.YYYY"
+                time_format: false
+              - { name: url, label: "Link zum Produkt", widget: string }
+              - { name: affUrl, label: "Partnerlink (falls anders)", widget: string, required: false }
+              - { name: image, label: "Bild", widget: image, required: false }
+              - { name: note, label: "Kurzbeschreibung", widget: text, required: false }
+
   - name: seiten
     label: Seiten
     files:

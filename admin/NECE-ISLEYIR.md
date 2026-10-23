@@ -11,6 +11,16 @@ təxminən 1 dəqiqə sonra dəyişiklik saytda görünür. Kod bilmək lazım d
 5. Yuxarıda **Publish → Publish now** basın.
 6. 1–2 dəqiqə gözləyin, saytı yeniləyin (Ctrl+F5 / Cmd+Shift+R).
 
+## Yeni ürün əlavə etmək
+1. Soldan **Produkte → Produktliste** seçin.
+2. **"Produkt hinzufügen"** basın, yeni boş kart açılır.
+3. Doldurun: ad, kateqoriya, satıcı, qiymət, "yoxlanma tarixi", link,
+   istəsəniz şəkil ("Wähle ein Bild" → kompüterdən yükləyin) və qısa təsvir.
+4. **Veröffentlichen → Jetzt veröffentlichen**. 1–2 dəqiqəyə ürün saytda görünür.
+- Ürünü silmək: kartın sağ üstündəki **×**.
+- Sıranı dəyişmək: kartı yuxarıdakı ≡ işarəsindən tutub sürüşdürün.
+- "Köhnə qiymət" (üstündən xətt çəkilən) yalnız satıcının saytında həqiqətən varsa yazılır.
+
 ## Arxada nə olur
 - Saytın bütün faylları GitHub-da saxlanır (GitHub = kodun "seyfi").
 - "Publish" basanda panel həmin seyfə yeni versiya yazır.

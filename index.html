@@ -540,7 +540,7 @@ fetch('content/startseite.json', { cache: 'no-cache' })
 </script>
 <script src="deals.js"></script>
 <script>
-(function(){
+function seiteAufbauen(){
   'use strict';
 
   const $  = s => document.querySelector(s);
@@ -761,7 +761,25 @@ fetch('content/startseite.json', { cache: 'no-cache' })
 
   $('#yr').textContent = new Date().getFullYear();
   render();
-})();
+}
+
+/* Produkte aus dem Admin-Panel (content/produkte.json) kommen zu denen aus
+   deals.js dazu. Zwei Dateien, zwei Schreiber: das Skript schreibt deals.js,
+   das Panel schreibt produkte.json — keiner ueberschreibt den anderen.
+   Laedt die Datei nicht, baut die Seite trotzdem mit deals.js auf. */
+fetch('content/produkte.json', { cache: 'no-cache' })
+  .then(r => r.ok ? r.json() : null)
+  .then(c => {
+    ((c && c.produkte) || []).forEach((p, i) => {
+      if (!p || !p.title || !p.url) return;
+      DEALS.push(Object.assign({}, p, {
+        id: p.id || 'panel-' + (i + 1),
+        price: typeof p.price === 'number' ? p.price : null,
+      }));
+    });
+  })
+  .catch(() => {})
+  .then(seiteAufbauen);
 </script>
 </body>
 </html>
