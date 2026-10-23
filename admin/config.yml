@@ -1,0 +1,35 @@
+# Decap CMS — Admin-Panel unter https://sparfind.de/admin/
+#
+# Login laeuft ueber Decap Turbo (gehostet von Decap selbst). Dadurch braucht
+# die Seite keinen eigenen OAuth-Server, und im Repo liegt kein Token.
+# Jede Speicherung im Panel = ein Commit auf `main` -> GitHub Pages baut neu
+# (dauert ca. 1 Minute).
+backend:
+  name: turbo-github
+  turbo_site_id: 1ffbece9-6fa0-4dee-bfb9-78e9d13fca67
+  branch: main
+
+# Nur fuer die lokale Vorschau (http://localhost): `npx decap-server` starten,
+# dann geht das Panel ohne Login direkt auf die Dateien auf der Platte.
+# Auf sparfind.de hat diese Zeile keine Wirkung.
+local_backend: true
+
+locale: de
+
+media_folder: bilder
+public_folder: /bilder
+
+# Bewusst NICHT im Panel: deals.js. Die Datei schreibt das Skript
+# (YAYINLA.bat / tools/build-deals.js) — zwei Schreiber auf einer Datei
+# wuerden sich gegenseitig ueberschreiben.
+collections:
+  - name: seiten
+    label: Seiten
+    files:
+      - name: startseite
+        label: Startseite (oberer Teil)
+        file: content/startseite.json
+        fields:
+          - { name: titel1, label: "Überschrift, Zeile 1", widget: string }
+          - { name: titel2, label: "Überschrift, Zeile 2 (farbig)", widget: string }
+          - { name: intro, label: "Text unter der Überschrift", widget: text }

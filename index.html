@@ -398,8 +398,8 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
 <main>
   <section class="hero wrap">
     <div class="badge-live"><span class="pulse" aria-hidden="true"></span><span id="badge-stand">Preise geprüft</span></div>
-    <h1>Trends finden.<br><em>Clever sparen.</em></h1>
-    <p>Handverlesene Angebote aus dem Netz — geprüfte Preise mit Datum, ohne erfundene Rabatte und ohne künstlichen Countdown.</p>
+    <h1><span id="hero-t1">Trends finden.</span><br><em id="hero-t2">Clever sparen.</em></h1>
+    <p id="hero-intro">Handverlesene Angebote aus dem Netz — geprüfte Preise mit Datum, ohne erfundene Rabatte und ohne künstlichen Countdown.</p>
     <div class="hero-stats">
       <div class="hstat"><div class="n" id="stat-deals">0</div><div class="l">geprüfte Deals</div></div>
       <div class="hstat"><div class="n" id="stat-cats">0</div><div class="l">Kategorien</div></div>
@@ -523,6 +523,20 @@ footer{border-top:1px solid var(--line);background:var(--bg-soft);position:relat
     location.replace('https://' + h + location.pathname + location.search + location.hash);
   }
 })();
+</script>
+<script>
+/* Hero-Text kommt aus content/startseite.json — die Datei bearbeitet man im
+   Admin-Panel (/admin/). Der Text oben im HTML bleibt als Rueckfall stehen,
+   falls die Datei mal nicht laedt; Suchmaschinen sehen ihn ebenfalls. */
+fetch('content/startseite.json', { cache: 'no-cache' })
+  .then(function (r) { return r.ok ? r.json() : null; })
+  .then(function (c) {
+    if (!c) return;
+    [['hero-t1', c.titel1], ['hero-t2', c.titel2], ['hero-intro', c.intro]].forEach(function (x) {
+      if (x[1]) document.getElementById(x[0]).textContent = x[1];
+    });
+  })
+  .catch(function () {});
 </script>
 <script src="deals.js"></script>
 <script>
