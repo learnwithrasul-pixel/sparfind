@@ -1,7 +1,7 @@
 {
   "produkte": [
     {
-      "merchant": "aliexpress",
+      "merchant": "amazon",
       "price": 125,
       "listPrice": 199,
       "affUrl": "https://link.amazon/B05O5Osib",
@@ -9,6 +9,7 @@
       "note": "ghhjsdkhjdlknskjhiuhekjbnewdnmndnsnjjsjkskkwuhuewuue",
       "title": "fön",
       "checkedAt": "2026-10-23",
+      "image": "/bilder/4_647b03ab-bb60-4cb4-ad3a-d63fa766d601_600x600-2x.webp",
       "category": "haushalt"
     }
   ]
